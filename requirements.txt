@@ -1,0 +1,7 @@
+numpy
+scikit-learn
+torch
+torchaudio
+flask
+werkzeug
+pydub
