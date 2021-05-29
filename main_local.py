@@ -1,6 +1,6 @@
 import os
 import secrets
-from flask import Flask, render_template, request, jsonify, flash, redirect, send_from_directory
+from flask import Flask, render_template, request, flash, redirect
 from werkzeug.utils import secure_filename
 
 from pydub import AudioSegment
@@ -10,7 +10,7 @@ from model import model, transform
 UPLOAD_FOLDER = 'static/upload'
 ALLOWED_EXTENSIONS = {'mp3'}
 SAVED_NAME = 'tmp.mp3'
-TEN_SECONDS = 10045
+TEN_SECONDS = 10*1000
 
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
@@ -65,6 +65,6 @@ def predict(path):
         
     return qari
 
-    
+
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000, debug=True)

@@ -1,16 +1,7 @@
-import numpy as np
-import pandas as pd
-import logging
-import pickle
-import glob
 import os
-from sklearn.metrics import accuracy_score, classification_report
-from sklearn.preprocessing import LabelEncoder
-
-
+import pickle
 import torch
 import torch.nn as nn
-from torch.utils.data import Dataset, DataLoader
 import torchaudio
 
 original_sample_rate = 44100
@@ -39,7 +30,7 @@ clip = 5
 cpu_count = os.cpu_count()
 
 
-with open('label_encoder.pickle', 'rb') as input_file:
+with open('static/label_encoder.pickle', 'rb') as input_file:
     label_encoder = pickle.load(input_file)
 
 sample_transform = torchaudio.transforms.Resample(orig_freq=original_sample_rate, new_freq=target_sample_rate)
@@ -86,7 +77,7 @@ class Model(nn.Module):
 
 
 model = Model(d_model, nhead, dim_feedforward, dropout_rate, activation_function, num_layers)
-model.load_state_dict(torch.load('model_state_dict'))
+model.load_state_dict(torch.load('static/model_state_dict'))
 
 def predict(path):
     waveform, sample_rate = torchaudio.load(path)
