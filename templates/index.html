@@ -10,14 +10,17 @@
 
         p {
             text-align: center;
-            font-size: 3vmax;
+            font-size: 1vmax;
         }
-        .input-field input:focus + label {
+
+        .input-field input:focus+label {
             color: white !important;
         }
+
         .input-field [type=text] {
             color: white;
         }
+
         .bar_container {
             width: 100%;
             /* Full width */
@@ -43,30 +46,29 @@
     <h1 class="header center">برمجان القرآن الكريم</h1>
     <p>
         {% with messages = get_flashed_messages() %}
-          {% if messages %}
-            <ul>
+        {% if messages %}
+        <ul>
             {% for message in messages %}
-              <li>{{ message }}</li>
+            <li>{{ message }}</li>
             {% endfor %}
-            </ul>
-          {% endif %}
+        </ul>
+        {% endif %}
         {% endwith %}
     </p>
     <p>
         إرفع مقطعا صوتيا لا يقل عن عشر ثواني لتتعرف على القارئ
     </p>
     <div class="input-field">
-        <form method=post enctype=multipart/form-data>
+        <form method=post enctype=multipart/form-data> 
             <input type=file name=file>
             <input type=submit value=Upload>
-          </form>
+        </form>
     </div>
     <div>
-        
 
         {% if audio_fname %}
         <audio controls>
-            <source src="{{ url_for('uploaded_file', filename=audio_fname )}}"  type="audio/mpeg">
+            <source src="{{ url_for('uploaded_file', filename=audio_fname )}}" type="audio/mpeg">
         </audio>
         {% endif %}
         {% if qari %}
@@ -75,9 +77,5 @@
         </div>
         {% endif %}
     </div>
-
-
 </body>
-
-
 </form>
