@@ -1,0 +1,81 @@
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <!-- Compiled and minified materialize JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <style type="text/css">
+        body {
+            background-color: #232425;
+            color: #f3f3f3;
+        }
+
+        p {
+            text-align: center;
+            font-size: 3vmax;
+        }
+        .input-field input:focus + label {
+            color: white !important;
+        }
+        .input-field [type=text] {
+            color: white;
+        }
+        .bar_container {
+            width: 100%;
+            /* Full width */
+            background-color: #515152;
+            /* Grey background */
+        }
+
+        .pred {
+            text-align: right;
+            white-space: nowrap;
+            /* Right-align text */
+            padding-top: 10px;
+            /* Add top padding */
+            padding-bottom: 10px;
+            /* Add bottom padding */
+            color: white;
+            /* White text color */
+        }
+    </style>
+</head>
+
+<body class="container row center">
+    <h1 class="header center">Quranthon</h1>
+    <p>
+        {% with messages = get_flashed_messages() %}
+          {% if messages %}
+            <ul>
+            {% for message in messages %}
+              <li>{{ message }}</li>
+            {% endfor %}
+            </ul>
+          {% endif %}
+        {% endwith %}
+    </p>
+    
+    <div class="input-field">
+        <form method=post enctype=multipart/form-data>
+            <input type=file name=file>
+            <input type=submit value=Upload>
+          </form>
+    </div>
+    <div>
+        
+
+        {% if audio_fname %}
+        <audio controls>
+            <source src="{{ url_for('uploaded_file', filename=audio_fname )}}"  type="audio/mpeg">
+        </audio>
+        {% endif %}
+        {% if qari %}
+        <div>
+            <h4>{{qari}}</h4>
+        </div>
+        {% endif %}
+    </div>
+
+
+</body>
+
+
+</form>
