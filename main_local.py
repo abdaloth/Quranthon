@@ -1,18 +1,18 @@
 import os
 import secrets
-from flask import Flask, render_template, request, flash, redirect
+from flask import Flask, render_template, request, flash, redirect, send_from_directory
 from werkzeug.utils import secure_filename
 
 from pydub import AudioSegment
 import torch
 import torchaudio
 
-from model import model, transform, channel
+from model import model, transform, channel, label_encoder
 
 UPLOAD_FOLDER = 'static/upload'
 ALLOWED_EXTENSIONS = {'mp3'}
 SAVED_NAME = 'tmp.mp3'
-TEN_SECONDS = 10*1000
+TEN_SECONDS = 10046
 
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
@@ -52,6 +52,12 @@ def upload_file():
             audio[:TEN_SECONDS].export(pth, format="mp3")
             return render_template("index.html", audio_fname=filename, qari=predict(pth))
     return render_template("index.html")
+
+@app.route('/uploads/<filename>')
+def uploaded_file(filename):
+    # audio = AudioSegment.from_mp3(src)
+    return send_from_directory(app.config['UPLOAD_FOLDER'],
+                               filename)
 
 
 def predict(path):
