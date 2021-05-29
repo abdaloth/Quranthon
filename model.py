@@ -77,7 +77,7 @@ class Model(nn.Module):
 
 
 model = Model(d_model, nhead, dim_feedforward, dropout_rate, activation_function, num_layers)
-model.load_state_dict(torch.load('static/model_state_dict'))
+model.load_state_dict(torch.load('static/model_state_dict', map_location=torch.device('cpu')))
 
 def predict(path):
     waveform, sample_rate = torchaudio.load(path)

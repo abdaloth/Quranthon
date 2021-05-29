@@ -5,7 +5,9 @@ from werkzeug.utils import secure_filename
 
 from pydub import AudioSegment
 import torch
-from model import model, transform
+import torchaudio
+
+from model import model, transform, channel
 
 UPLOAD_FOLDER = 'static/upload'
 ALLOWED_EXTENSIONS = {'mp3'}
