@@ -4,7 +4,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <style type="text/css">
         body {
-            background-color: #232425;
+            background-image: {{ url_for('static', filename='quranthon_bg.png' )}};
             color: #f3f3f3;
         }
 
@@ -40,7 +40,7 @@
 </head>
 
 <body class="container row center">
-    <h1 class="header center">Quranthon</h1>
+    <h1 class="header center">برمجان القرآن الكريم</h1>
     <p>
         {% with messages = get_flashed_messages() %}
           {% if messages %}
