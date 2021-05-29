@@ -4,7 +4,8 @@ from flask import Flask, render_template, request, jsonify, flash, redirect, sen
 from werkzeug.utils import secure_filename
 
 from pydub import AudioSegment
-
+import torch
+from model import model, transform
 
 UPLOAD_FOLDER = 'static/upload'
 ALLOWED_EXTENSIONS = {'mp3'}
@@ -46,20 +47,24 @@ def upload_file():
             pth = os.path.join(app.config['UPLOAD_FOLDER'], filename)
             file.save(pth)
             audio = AudioSegment.from_mp3(pth)
-            audio.export
-            return render_template("index.html", audio_fname=filename)
+            audio[:TEN_SECONDS].export(pth, format="mp3")
+            return render_template("index.html", audio_fname=filename, qari=predict(pth))
     return render_template("index.html")
 
 
-@app.route('/uploads/<filename>')
-def uploaded_file(filename):
-    # audio = AudioSegment.from_mp3(src)
-    return send_from_directory(app.config['UPLOAD_FOLDER'],
-                               filename)
+def predict(path):
+    waveform, sample_rate = torchaudio.load(path)
+    sound_data = transform(waveform[channel, :])[0:13, :].unsqueeze(0)
 
-@app.route("/predict", methods=["POST"])
-def predict():
-    return render_template("index.html")
+    model.eval()
+    
+    with torch.no_grad():
+        output = model(sound_data)
 
+    qari = label_encoder.inverse_transform([torch.argmax(output).item()])[0]
+        
+    return qari
+
+    
 if __name__ == "__main__":
-    app.run(host="127.0.0.1", port=5000, debug=True)
+    app.run(host="0.0.0.0", port=5000, debug=True)
